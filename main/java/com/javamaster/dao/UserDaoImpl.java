@@ -1,8 +1,10 @@
 package com.javamaster.dao;
 
 import com.javamaster.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,4 +62,17 @@ public class UserDaoImpl implements UserDao {
 
         return query.getResultList();
     }
+
+    @Override
+    @Transactional
+    public User getUserByUsername(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("name", name));
+        List<User> results = criteria.list();
+        User user = results.get(0);
+
+        return user;
+    }
+
 }

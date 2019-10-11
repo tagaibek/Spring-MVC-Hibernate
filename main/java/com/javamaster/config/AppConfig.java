@@ -18,7 +18,6 @@ import static org.hibernate.cfg.Environment.*;
 @ComponentScans(value = {@ComponentScan("com.javamaster.dao"),
         @ComponentScan("com.javamaster.service")})
 public class AppConfig {
-
     @Autowired
     private Environment env;
 

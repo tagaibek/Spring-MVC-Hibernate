@@ -1,5 +1,6 @@
 package com.javamaster.service;
 
+import com.javamaster.model.Role;
 import com.javamaster.model.User;
 
 import java.util.List;
@@ -14,4 +15,11 @@ public interface UserService {
     User getUserById(long id);
 
     List<User> listUsers();
+
+    List<Role> getRoles();
+
+    Role getRoleByName(String name);
+
+ /*   UserDetails loadUserByUsername(String name);*/
+
 }

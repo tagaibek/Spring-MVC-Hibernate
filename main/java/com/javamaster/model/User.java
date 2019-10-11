@@ -1,6 +1,8 @@
 package com.javamaster.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +20,12 @@ public class User {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName="id")})
+    private List<Role> roles = new ArrayList<>();
 
     public User() {
     }
@@ -65,5 +73,24 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

@@ -1,6 +1,8 @@
 package com.javamaster.service;
 
+import com.javamaster.dao.RoleDao;
 import com.javamaster.dao.UserDao;
+import com.javamaster.model.Role;
 import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RoleDao roleDao;
 
     @Override
     @Transactional
@@ -41,4 +46,13 @@ public class UserServiceImpl implements UserService {
         return userDao.listUsers();
     }
 
+    @Override
+    public List<Role> getRoles() {
+        return roleDao.getRoles();
+    }
+
+    @Override
+    public Role getRoleByName(String name) {
+        return roleDao.getRoleByName(name);
+    }
 }
