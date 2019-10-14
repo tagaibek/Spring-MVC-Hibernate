@@ -5,6 +5,9 @@ import com.javamaster.dao.UserDao;
 import com.javamaster.model.Role;
 import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserDao userDao;
 
@@ -56,7 +59,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User loadUserByUsername(String login) {
-        return userDao.getUserByUsername(login);
+    public User getUserByLogin(String login) {
+        return userDao.getUserByLogin(login);
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDao.getUserByLogin(username);
+        List<Role> grantedAuthorities = user.getRoles();
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), grantedAuthorities);
     }
 }

@@ -19,7 +19,7 @@ public class UserController {
     @RequestMapping
     public String getUserByName(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User loadUser = userService.loadUserByUsername(authentication.getName());
+        User loadUser = userService.getUserByLogin(authentication.getName());
         if (loadUser != null) {
             model.addAttribute("loadUser", loadUser);
         }
