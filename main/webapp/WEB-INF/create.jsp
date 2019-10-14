@@ -14,7 +14,7 @@ Add User
 </html>
 
 <%--@elvariable id="user" type="com.javamaster.model.User"--%>
-    <form:form action="/users/add" modelAttribute="user">
+    <form:form action="/admin/users/add" modelAttribute="user">
         Login : <form:input path="login" />
         <br><br>
         Password : <form:password path="password" />

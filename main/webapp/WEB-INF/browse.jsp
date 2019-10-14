@@ -63,8 +63,8 @@
                 <td>${user.id}</td>
                 <td>${user.login}</td>
                 <td>${user.name}</td>
-                <td><a href="<c:url value='/users/edit/${user.id}'/>">Edit</a></td>
-                <td><a href="<c:url value='/users/remove/${user.id}'/>">Delete</a></td>
+                <td><a href="<c:url value='/admin/users/edit/${user.id}'/>">Edit</a></td>
+                <td><a href="<c:url value='/admin/users/remove/${user.id}'/>">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
@@ -73,7 +73,7 @@
 
 <h1>Add a User</h1>
 <div style="" class="">
-    <a href="/users/add">
+    <a href="/admin/users/add">
         Create a new User
     </a>
 </div>

@@ -9,7 +9,7 @@
     <title>Home</title>
 </head>
 <body>
-    <form:form method="POST" action="/users/edit" modelAttribute="user">
+    <form:form method="POST" action="/admin/users/edit" modelAttribute="user">
         <form:hidden path="id" />
         <table>
             <tr>
@@ -24,6 +24,12 @@
                 <td><form:label path="name">Name</form:label></td>
                 <td><form:input path="name"/></td>
             </tr>
+            <c:forEach items="${roleList}" var="role">
+                ${role.roleName}
+                <label>
+                    <input type="checkbox" name="role[]" value="${role.roleName}"/>
+                </label>
+            </c:forEach>
             <tr>
                 <td><input type="submit" value="Submit"/></td>
             </tr>

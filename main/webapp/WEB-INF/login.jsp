@@ -1,4 +1,4 @@
-<form action="doLogin" method="post">
+<form action="/login" method="post">
 
     <legend>Please sign in</legend>
 
