@@ -20,6 +20,6 @@ public interface UserService {
 
     Role getRoleByName(String name);
 
- /*   UserDetails loadUserByUsername(String name);*/
+    User loadUserByUsername(String name);
 
 }

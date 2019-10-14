@@ -11,25 +11,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-/*@PreAuthorize("hasAuthority('ADMIN')")*/
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     private UserService userService;
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String user() {
+        return "login";
+    }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String listUsers(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("listUsers", userService.listUsers());
 
-        return "browse"; // browse
+        return "browse";
     }
 
-    @RequestMapping(value = "/admin/users/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/add", method = RequestMethod.GET)
     public String addUser(Model model) {
-        // todo change embedded tomcat
-        // todo create Dao for Role
-        // todo set here an attribute for roles
-        // todo iterate roles in the create.jsp form
         model.addAttribute("user", new User());
         model.addAttribute("roleList", userService.getRoles());
 
@@ -39,40 +40,38 @@ public class AdminController {
     @RequestMapping(value = "/users/add", method = RequestMethod.POST)
     public String addUser(@ModelAttribute User user, @RequestParam("role[]") List<String> roleList) {
         for (String roleStr : roleList) {
-             Role role = userService.getRoleByName(roleStr);
-             user.getRoles().add(role);
+            Role role = userService.getRoleByName(roleStr);
+            user.getRoles().add(role);
         }
         userService.addUser(user);
 
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @RequestMapping("/admin/users/remove/{id}")
+    @RequestMapping("/users/remove/{id}")
     public String removeUser(@PathVariable("id") long id) {
         userService.removeUser(id);
 
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @RequestMapping("/admin/users/edit/{id}")
+    @RequestMapping("/users/edit/{id}")
     public String editUser(@PathVariable("id") long id, Model model) {
         User user = userService.getUserById(id);
+        model.addAttribute("roleList", userService.getRoles());
         model.addAttribute("user", user);
 
         return "edit";
     }
 
-    @PostMapping("/admin/users/edit")
-    public String edit(@ModelAttribute User user) {
+    @PostMapping("/users/edit")
+    public String edit(@ModelAttribute User user,@RequestParam("role[]") List<String> roleList) {
+        for (String roleStr : roleList) {
+            Role role = userService.getRoleByName(roleStr);
+            user.getRoles().add(role);
+        }
         userService.updateUser(user);
 
-        return "redirect:/users";
-    }
-
-    @RequestMapping("/admin/users/view/{id}")
-    public String userData(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-
-        return "view";
+        return "redirect:/admin/users";
     }
 }

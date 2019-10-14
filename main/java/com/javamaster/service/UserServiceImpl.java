@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
@@ -19,19 +20,17 @@ public class UserServiceImpl implements UserService {
     private RoleDao roleDao;
 
     @Override
-    @Transactional
     public void addUser(User user) {
         this.userDao.addUser(user);
     }
 
-    @Transactional
+
     @Override
     public void updateUser(User user) {
         this.userDao.updateUser(user);
     }
 
     @Override
-    @Transactional
     public void removeUser(long id) {
         this.userDao.removeUser(id);
     }
@@ -54,5 +53,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Role getRoleByName(String name) {
         return roleDao.getRoleByName(name);
+    }
+
+    @Override
+    public User loadUserByUsername(String login) {
+        return userDao.getUserByUsername(login);
     }
 }

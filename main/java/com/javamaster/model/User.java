@@ -21,7 +21,7 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER ,cascade=CascadeType.REFRESH)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName="id")})

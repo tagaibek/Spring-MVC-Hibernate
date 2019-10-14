@@ -1,17 +1,28 @@
 package com.javamaster.controller;
 
-/*@Controller
-@PreAuthorize("hasAuthority('USER')")
+import com.javamaster.model.User;
+import com.javamaster.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getUserByName(@ModelAttribute User user, Model model) {
-        User loadUser = (User)userService.loadUserByUsername(user.getName());
-        if (loadUser !=null){
-            model.addAttribute(loadUser);
+    @RequestMapping
+    public String getUserByName(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User loadUser = userService.loadUserByUsername(authentication.getName());
+        if (loadUser != null) {
+            model.addAttribute("loadUser", loadUser);
         }
         return "user";
     }
-}*/
+}
